@@ -33,7 +33,6 @@ app.use("/api", indexRouter);
 const handleErrors = require("./errors")
 handleErrors(app);
 
-
 // ℹ️ Defines the server port (default: 5005)
 const PORT = process.env.PORT || 5005;
 

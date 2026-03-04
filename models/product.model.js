@@ -1,4 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 
 const productSchema = new Schema({
     name: String,
@@ -15,7 +17,7 @@ const productSchema = new Schema({
      enum: ["women", "men","kids","unisex"],
      default: "unisex"
     },
-    creator: [{type: Schema.Types.ObjectId("User")}],
+    creator: [{type: mongoose.Schema.Types.ObjectId, ref:"User"}],
 })
-const Product = model("Product", productSchema )
+const Product = mongoose.model("Product", productSchema )
 module.exports = Product

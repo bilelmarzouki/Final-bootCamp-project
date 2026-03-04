@@ -10,12 +10,12 @@ router.use("/auth", authRouter)
 router.use("/users", userRouter)
 
 // import comment route
-/* const commentRouter = require('./comment.routes')
-router.use("/comments", commentRouter) */
+const commentRouter = require('./comment.routes')
+router.use("/products", commentRouter) 
 
 // import product router
-/* const productRouter = require('./product.routes')
-router.use("/products", productRouter) */
+const productRouter = require('./product.routes')
+router.use("/products", productRouter)
 
 /* router.get("/verify", verifyToken, (req, res)=>{
     res.send("verifing route to see if the middleware is really working")

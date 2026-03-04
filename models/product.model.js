@@ -6,7 +6,7 @@ const productSchema = new Schema({
     name: String,
     description: String,
     price: Number,
-    stockQuantity: Nunber,
+    stockQuantity: Number,
     category: {
      type: String,
      enum: ["formal", "Bohemian","casual","sport"],

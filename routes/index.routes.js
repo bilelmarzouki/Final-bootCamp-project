@@ -11,7 +11,7 @@ router.use("/users", userRouter)
 
 // import comment route
 const commentRouter = require('./comment.routes')
-router.use("/products", commentRouter) 
+router.use("/comments", commentRouter) 
 
 // import product router
 const productRouter = require('./product.routes')

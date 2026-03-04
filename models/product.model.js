@@ -17,7 +17,7 @@ const productSchema = new Schema({
      enum: ["women", "men","kids","unisex"],
      default: "unisex"
     },
-    creator: [{type: mongoose.Schema.Types.ObjectId, ref:"User"}],
+    creator: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
 })
 const Product = mongoose.model("Product", productSchema )
 module.exports = Product

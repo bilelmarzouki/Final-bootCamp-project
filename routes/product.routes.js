@@ -4,7 +4,7 @@ const Product = require("../models/product.model")
 
 
 // get all product
-//path : api/products
+//path : /api/products
 router.get("/",async(req,res,next)=>{
     
     try {
@@ -15,7 +15,7 @@ router.get("/",async(req,res,next)=>{
     }
 })
 // get  product by id
-//path : api/products/:productId
+//path : /api/products/:productId
 
 router.get("/:productId",async(req,res,next)=>{
     
@@ -31,7 +31,7 @@ router.get("/:productId",async(req,res,next)=>{
 
 
 //post
-// path : api/products
+// path : /api/products
 router.post("/",async(req,res,next)=>{
     
     try {
@@ -41,7 +41,8 @@ router.post("/",async(req,res,next)=>{
             price: req.body.price ,
             stockQuantity: req.body.stockQuantity ,
             category: req.body.category,
-            gender: req.body.gender
+            gender: req.body.gender,
+            creator: req.body.creator
         })
         res.status(201).json(response)
     } catch (error) {
@@ -51,9 +52,9 @@ router.post("/",async(req,res,next)=>{
 
 
 //put
-//path : api/products/:productId
+//path : /api/products/:productId
 
-router.put("/:productId",async(req,res,next)=>{
+router.patch("/:productId",async(req,res,next)=>{
     
     try {
         const {productId} = req.params
@@ -64,7 +65,7 @@ router.put("/:productId",async(req,res,next)=>{
             stockQuantity: req.body.stockQuantity ,
             category: req.body.category,
             gender: req.body.gender
-        })
+        },  {new:true})
         res.status(202).json(response)
     } catch (error) {
         next(error)
@@ -79,9 +80,12 @@ router.delete("/:productId",async(req,res,next)=>{
     
     try {
         const {productId} = req.params
+        console.log(req.params)
         await Product.findByIdAndDelete(productId)
         res.sendStatus(200)
     } catch (error) {
         next(error)
     }
 })
+
+module.exports = router;

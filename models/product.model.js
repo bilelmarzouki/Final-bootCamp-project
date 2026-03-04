@@ -2,26 +2,20 @@ const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema({
     name: String,
-    email: {
-        type: String,
-        required: [true, 'Email is required.'],
-        unique: true,
-        lowercase: true,
-        trim: true
-    },
-    password: {
-        type: Number,
-        required: [true, 'password is required.'],
-        unique: true,
-        trim: true
-    },
-    role: {
+    description: String,
+    price: Number,
+    stockQuantity: Nunber,
+    category: {
      type: String,
-     enum: ["Stylist", "Customer"],
-     default: "Customer"
+     enum: ["formal", "Bohemian","casual","sport"],
+     default: "casual"
     },
-    cart: [{type: Schema.Types.ObjectId("Product")}],
-    wallet: Number
+    gender: {
+     type: String,
+     enum: ["women", "men","kids","unisex"],
+     default: "unisex"
+    },
+    creator: [{type: Schema.Types.ObjectId("User")}],
 })
 const Product = model("Product", productSchema )
 module.exports = Product

@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const Product = require("../models/product.model")
 
-
+const {verifyToken, verifyCreator } = require("../middlewares/auth.middlewares")
 // get all product
 //path : /api/products
 router.get("/",async(req,res,next)=>{
@@ -32,7 +32,7 @@ router.get("/:productId",async(req,res,next)=>{
 
 //post
 // path : /api/products
-router.post("/",async(req,res,next)=>{
+router.post("/",verifyToken,verifyCreator,async(req,res,next)=>{
     
     try {
         const response = await Product.create({
@@ -42,7 +42,8 @@ router.post("/",async(req,res,next)=>{
             stockQuantity: req.body.stockQuantity ,
             category: req.body.category,
             gender: req.body.gender,
-            creator: req.body.creator
+            //creator: req.body.creator
+            creator: req.payload._id
         })
         res.status(201).json(response)
     } catch (error) {
@@ -54,7 +55,7 @@ router.post("/",async(req,res,next)=>{
 //put
 //path : /api/products/:productId
 
-router.patch("/:productId",async(req,res,next)=>{
+router.patch("/:productId",verifyToken,verifyCreator, async(req,res,next)=>{
     
     try {
         const {productId} = req.params
@@ -76,7 +77,7 @@ router.patch("/:productId",async(req,res,next)=>{
 
 //delete
 
-router.delete("/:productId",async(req,res,next)=>{
+router.delete("/:productId",verifyToken,verifyCreator, async(req,res,next)=>{
     
     try {
         const {productId} = req.params

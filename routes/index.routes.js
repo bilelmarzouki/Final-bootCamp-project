@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const {verifyToken} = require("../middlewares/auth.middlewares")
 //const verifyToken = require('../middlewares/auth.middlewares')
 // import authentication route
 const authRouter = require("./auth.routes")
@@ -17,7 +17,9 @@ router.use("/comments", commentRouter)
 const productRouter = require('./product.routes')
 router.use("/products", productRouter)
 
-/* router.get("/verify", verifyToken, (req, res)=>{
+
+// private route used just for loggedIn users
+router.get("/verify", verifyToken, (req, res)=>{
     res.send("verifing route to see if the middleware is really working")
-}) */
+}) 
 module.exports = router;

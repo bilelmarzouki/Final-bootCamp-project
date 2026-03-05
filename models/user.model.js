@@ -18,8 +18,8 @@ const userSchema = new Schema({
     },
     role: {
      type: String,
-     enum: ["Stylist", "Customer"],
-     default: "Customer"
+     enum: ["stylist", "customer"],
+     default: "customer"
     },
     cart: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
     wallet: Number

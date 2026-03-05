@@ -4,7 +4,7 @@ const User = require("../models/user.model");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
-const verifyToken = require('../middlewares/auth.middlewares')
+const {verifyToken} = require('../middlewares/auth.middlewares')
 //add verification token
 
 // POST "/api/auth/signup" => Creating a user document
@@ -89,7 +89,7 @@ router.post("/login",async(req,res,next)=>{
 
 })
 
-// GET "/api/auth/verify" => Validates the token on new users accesing the client
+// GET "/api/auth/verify" => user send the token, verify if token valid, return  information about the user loggedIn
   router.get("/verify", verifyToken, (req, res) => {
   res.status(200).json({payload: req.payload})
 })

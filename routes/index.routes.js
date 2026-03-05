@@ -17,6 +17,10 @@ router.use("/comments", commentRouter)
 const productRouter = require('./product.routes')
 router.use("/products", productRouter)
 
+// import cart router
+const cartRouter = require('./cart.routes')
+router.use("/cart", cartRouter)
+
 
 // private route used just for loggedIn users
 router.get("/verify", verifyToken, (req, res)=>{

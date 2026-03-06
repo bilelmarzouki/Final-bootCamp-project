@@ -11,7 +11,7 @@ const {verifyToken} = require('../middlewares/auth.middlewares')
 
 router.post("/signup",async(req,res,next)=>{
     console.log(req.body)
-    const {name ,password,email} = req.body
+    const {name ,password,email, role} = req.body
     //verify if the user fill out the required fileds
     
     if(!name || !password || !email){
@@ -40,7 +40,8 @@ router.post("/signup",async(req,res,next)=>{
         const body ={
             name: name,
             email: email,
-            password: hashPassword
+            password: hashPassword,
+            role: role
         }
         const response = await User.create(body)
         res.sendStatus(201)

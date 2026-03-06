@@ -33,7 +33,6 @@ router.get("/:productId",async(req,res,next)=>{
 //post
 // path : /api/products
 router.post("/",verifyToken,verifyCreator,async(req,res,next)=>{
-    
     try {
         const response = await Product.create({
             name: req.body.name,

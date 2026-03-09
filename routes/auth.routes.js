@@ -15,7 +15,7 @@ router.post("/signup",async(req,res,next)=>{
     //verify if the user fill out the required fileds
     
     if(!name || !password || !email){
-        res.status(400).json({ errorMessage: "All fields are required (email, password, username)" })
+        res.status(400).json({ errorMessage: "All fields are required (email, password, name)" })
         return
     }
 

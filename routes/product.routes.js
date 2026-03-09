@@ -35,6 +35,7 @@ router.get("/:productId",async(req,res,next)=>{
 router.post("/",verifyToken,verifyCreator,async(req,res,next)=>{
     try {
         const response = await Product.create({
+            image_url: req.body.image_url,
             name: req.body.name,
             description: req.body.description ,
             price: req.body.price ,
@@ -59,6 +60,7 @@ router.patch("/:productId",verifyToken,verifyCreator, async(req,res,next)=>{
     try {
         const {productId} = req.params
         const response = await Product.findByIdAndUpdate(productId,{
+            image_url: req.body.image_url,
             name: req.body.name,
             description: req.body.description ,
             price: req.body.price ,

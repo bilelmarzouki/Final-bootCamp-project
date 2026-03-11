@@ -14,9 +14,9 @@ router.get("/",async(req,res,next)=>{
         next(error)
     }
 })
+
 // get  product by id
 //path : /api/products/:productId
-
 router.get("/:productId",async(req,res,next)=>{
     
     try {
@@ -35,7 +35,7 @@ router.get("/:productId",async(req,res,next)=>{
 router.post("/",verifyToken,verifyCreator,async(req,res,next)=>{
     try {
         const response = await Product.create({
-            imageUrl: req.body.image_url,
+            imageUrl: req.body.imageUrl,
             name: req.body.name,
             description: req.body.description ,
             price: req.body.price ,
@@ -60,7 +60,7 @@ router.patch("/:productId",verifyToken,verifyCreator, async(req,res,next)=>{
     try {
         const {productId} = req.params
         const response = await Product.findByIdAndUpdate(productId,{
-            imageUrl: req.body.image_url,
+            imageUrl: req.body.imageUrl,
             name: req.body.name,
             description: req.body.description ,
             price: req.body.price ,

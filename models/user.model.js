@@ -21,7 +21,7 @@ const userSchema = new Schema({
      enum: ["stylist", "customer"],
      default: "customer"
     },
-    cart: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
+    //cart: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
     wallet: Number
 })
 const User = mongoose.model("User", userSchema )

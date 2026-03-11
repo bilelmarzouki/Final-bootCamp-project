@@ -21,4 +21,7 @@ router.use("/products", productRouter)
 const cartRouter = require('./cart.routes')
 router.use("/cart", cartRouter)
 
+const paymentRoutes = require("./payment.routes")
+router.use("/payment", paymentRoutes)
+
 module.exports = router;

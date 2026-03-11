@@ -32,6 +32,25 @@ router.post("/",verifyToken, async(req,res,next)=>{
     }
 })
 
+// update comment
+// path: /comments/:commentId
+router.patch("/:commentId", verifyToken, async (req, res, next) => {
+  try {
+    const { commentId } = req.params;
+
+    const updatedComment = await Comment.findByIdAndUpdate(
+      commentId,
+      { description: req.body.description },
+      { new: true }
+    ).populate("user", "name");
+
+    res.status(200).json(updatedComment);
+
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 

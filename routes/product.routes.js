@@ -15,6 +15,18 @@ router.get("/",async(req,res,next)=>{
     }
 })
 
+// /api/products/creators/:creatorId
+router.get('/creators/:creatorId', async (req, res, next) => {
+  try {
+    const { creatorId } = req.params;
+    const response = await Product.find({ creator: creatorId }).populate("creator", "-password");
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 // get  product by id
 //path : /api/products/:productId
 router.get("/:productId",async(req,res,next)=>{

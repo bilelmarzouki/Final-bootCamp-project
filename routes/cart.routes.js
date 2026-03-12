@@ -48,4 +48,29 @@ router.get("/",verifyToken,async(req,res,next)=>{
     }
  } )
 
+// path: /api/cart/
+ router.delete("/remove/:productId", verifyToken, async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+
+    const cart = await Cart.findOne({ user: req.payload._id });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // remove the product from the items array
+    cart.items = cart.items.filter(
+      (item) => item.product.toString() !== productId
+    );
+
+    await cart.save();
+
+    res.status(200).json(cart);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 module.exports = router

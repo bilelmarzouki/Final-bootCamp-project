@@ -48,7 +48,7 @@ router.get("/",verifyToken,async(req,res,next)=>{
     }
  } )
 
-// path: /api/cart/
+// path: /api/cart/remove/:productId
  router.delete("/remove/:productId", verifyToken, async (req, res, next) => {
   try {
     const { productId } = req.params;
@@ -67,6 +67,20 @@ router.get("/",verifyToken,async(req,res,next)=>{
     await cart.save();
 
     res.status(200).json(cart);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// path: /api/cart/  (delete entire cart)
+router.delete("/", verifyToken, async (req, res, next) => {
+  try {
+    const result = await Cart.findOneAndDelete({ user: req.payload._id });
+    if (!result) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+    res.sendStatus(204); // no content
   } catch (error) {
     console.log(error);
     next(error);

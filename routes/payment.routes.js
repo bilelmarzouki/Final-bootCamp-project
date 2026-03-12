@@ -5,28 +5,35 @@ const router = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // make sure to add your Stripe Secret Key to the .env
 
 router.post("/create-payment-intent", async (req, res, next) => {
-  const cart = req.body.cart; // this is how we will receive the productId the user is trying to purchase. This can also later be set to receive via params.
-  //const cart = req.body
+  const { cart } = req.body; // expect { _id: ... } from the client
   try {
-    // can you give me the populate to get the price of the product that is being purchased and i want the quantity?
-    const dbCart = await Cart.findById(cart._id).populate("items.product");
-    const amount = dbCart.items.reduce(
-      (sum, item) => sum + item.product.price * item.quantity,
-      0,
-    );
+    // populate product references so we can read the prices
+    const dbCart = await Cart.findById(cart?._id).populate("items.product");
+
+    if (!dbCart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+    const amount = dbCart.items.reduce((sum, item) => {
+      if (!item.product) {
+        return sum; 
+      }
+      return sum + item.product.price * item.quantity;
+    }, 0);
+    const cents = Math.round(amount * 100)
     console.log(amount);
-    // the backend has the authoritative cart, use the populated version if available
+   
     const snapshot = dbCart.toObject();
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
+      amount: cents,
       currency: "eur",
       automatic_payment_methods: {
         enabled: true,
       },
     });
 
-    // persist a payment record with the calculated total and the cart snapshot
+    snapshot.items = snapshot.items.filter(item => item.product);
+
     await Payment.create({
       price: amount,
       cart: snapshot,
